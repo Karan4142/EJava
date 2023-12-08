@@ -1,0 +1,23 @@
+Index.jsp::
+<html>
+<body>
+<% 
+ session.setAttribute("user", "sameer"); 
+ Cookie s = new Cookie("name", "sam"); 
+ response.addCookie(s);
+%>
+<a href="Expression.jsp">Visit</a>
+</body>
+</html>
+Expression.jsp:
+<html>
+<body>
+<h1>Use of Expression Language</h1><br>
+${"Learning Expression"}<br> 
+Expression1: ${1 > (4 / 2)}<br> 
+Expression2: ${(10 * 10) ne 100}<br>
+<h1>Use of implicit object in Expression Language</h1><br> 
+Expression Language session Scope Object: ${sessionScope.user}<br> 
+Expression Language cookie: ${cookie.name.value}
+</body>
+</html>
