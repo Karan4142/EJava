@@ -1,0 +1,46 @@
+Index.html:
+
+<html>
+<body>
+ <form action="update.jsp">
+ emp no.<input type="text" name="t1"><br>
+ emp name<input type="text" name="t2"><br>
+ emp age<input type="text" name="t3"><br>
+ emp salary<input type="text" name="t4"><br>
+ <input type="submit" value="update">
+ </form>
+</body>
+</html>
+
+Update.jsp:
+
+<%@ page contentType="text/html; pageEncoding="UTF-8" %>
+<%@ page import="java.sql.*" %>
+<%
+String eno = request.getParameter("t1");
+String ename = request.getParameter("t2");
+String age = request.getParameter("t3");
+String salary = request.getParameter("t4");
+try {
+ Class.forName("com.mysql.jdbc.Driver");
+ Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emp1", "root", 
+"root123");
+ PreparedStatement stmt = con.prepareStatement("select * from tab where eno=?");
+ stmt.setString(1, eno);
+ ResultSet rs = stmt.executeQuery();
+ if (rs.next()) {
+ PreparedStatement pst1 = con.prepareStatement("update tab set ename=?,age=?,salary=? where 
+eno=?");
+ pst1.setString(1, ename);
+ pst1.setString(2, age);
+ pst1.setString(3, salary);
+ pst1.setString(4, eno);
+ pst1.executeUpdate();
+ out.print("<h1>record updated</h1>");
+ } else {
+ out.print("<h1>record not found</h1>");
+ }
+} catch (Exception e) {
+ out.print(e);
+}
+%>
