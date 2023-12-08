@@ -1,0 +1,67 @@
+Index.html:
+
+<html>
+<head>
+ <title>Session Example</title>
+</head>
+<body>
+ <form action="SessionServlet" method="get">
+ Enter User Id: <input type="text" name="txtName"><br>
+ <input type="reset" value="Reset">
+ <input type="submit" value="Submit">
+ </form>
+</body>
+</html>
+
+Sesssion.java:
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class SessionServlet extends HttpServlet {
+ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException 
+{
+ PrintWriter out = res.getWriter();
+ out.println("<html><body>");
+ HttpSession hs = req.getSession(true);
+ if (hs.isNew()) {
+ String name = req.getParameter("txtName");
+ hs.setAttribute("uname", name);
+ hs.setAttribute("visit", "1");
+ out.println("<h5>Welcome First Time</h5>");
+ } else {
+ out.println("<h5>Welcome Again</h5");
+ int visit = Integer.parseInt((String) hs.getAttribute("visit")) + 1;
+ out.println("<h5>You visited " + visit + " times</h5");
+ hs.setAttribute("visit", visit);
+ }
+ out.println("<h5>Your Session Id " + hs.getId() + "</h5>");
+ out.println("<h5>You Logged in at " + new java.util.Date(hs.getCreationTime()) + "</h5>");
+ out.println("<h5><a href=logoutServlet>Click to LOGOUT</a></h5>");
+ out.println("</body></html>");
+ }
+}
+
+Logout.servlet:
+package logoutservlet;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+public class LogoutServlet extends HttpServlet {
+ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException 
+{
+ PrintWriter out = res.getWriter();
+ out.println("<html>");
+ out.println("<body>");
+ HttpSession hs = req.getSession();
+ if (hs != null) {
+Enterprise Java B.N.N.College,Bhiwandi
+ 15
+ hs.invalidate();
+ }
+ out.println("<h1>You are logged out now...</h1>");
+ out.println("</body>");
+ out.println("</html>");
+ }
+}
