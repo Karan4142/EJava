@@ -1,0 +1,62 @@
+Index.html:
+<html>
+<body>
+ <form action="MarkEntrySrv" method="get">
+ Enter Roll No.:<input type="text" name="srno"><br>
+ Enter Student Name:<input type="text" name="name"><br>
+ Enter Marks (EJ):<input type="text" name="m1"><br>
+ Enter Marks (AWP):<input type="text" name="m2"><br>
+ <input type="submit" value="Submit">
+ </form>
+</body>
+</html>
+MarkEntrySrv.java:
+import ejb.MarksEntry;
+import java.io.*;
+import javax.ejb.EJB;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class MarkEntrySrv extends HttpServlet {
+ @EJB
+ MarksEntry bean;
+ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, 
+ServletException {
+ PrintWriter out = res.getWriter();
+ String id, name, p1, p2;
+ id = req.getParameter("srno");
+Enterprise Java B.N.N.College,Bhiwandi
+50
+ name = req.getParameter("name");
+ p1 = req.getParameter("m1");
+ p2 = req.getParameter("m2");
+ bean.entry(id, name, p1, p2);
+ out.print(bean.submit(name));
+ }
+}
+MarksEntry.java:
+package ejb;
+import java.sql.*;
+import javax.ejb.Stateless;
+@Stateless
+public class MarksEntry {
+ public void entry(String srno, String sname, String p1, String p2) {
+ try {
+ Class.forName("com.mysql.jdbc.Driver");
+ Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", 
+"system");
+ PreparedStatement ps = con.prepareStatement("insert into student values(?,?,?,?)");
+ ps.setString(1, srno);
+ ps.setString(2, sname);
+ ps.setString(3, p1);
+ ps.setString(4, p2);
+ ps.executeUpdate();
+ } catch (Exception e) {
+ System.out.print(e);
+ }
+ }
+Enterprise Java B.N.N.College,Bhiwandi
+51
+ public String submit(String name) {
+ return (name.toUpperCase() + " record submitted successfully!!");
+ }
+}
