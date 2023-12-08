@@ -1,0 +1,61 @@
+Index.html:
+<html> 
+<head> 
+<meta http-equiv="Refresh" content="0; URL=serverclient"> 
+</head>
+<body>
+ <form action="serverclient">
+ <input type="submit" value="submit">
+ </form> 
+ 
+</body>
+</html> 
+import ejb.Hitbeans;
+import javax.ejb.EJB; 
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class serverclient extends HttpServlet {
+ 
+Enterprise Java B.N.N.College,Bhiwandi
+47
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException {
+ response.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = response.getWriter();
+ try {
+ out.print("<h1> number of times this servlet is accessed: </h1>" + counter.getHitCnt()); 
+ }
+ finally 
+ { 
+ out.close(); 
+ } 
+ }
+ 
+ @EJB Hitbeans counter; 
+ protected void doGet(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException {
+ PrintWriter out = response.getWriter();
+ try { 
+ out.print("<h1> number of times this servlet is accessed: </h1>" + counter.getHitCnt()); 
+ } 
+ finally 
+ { 
+ out.close(); 
+ } 
+ } 
+ }
+package ejb;
+Enterprise Java B.N.N.College,Bhiwandi
+48
+import javax.ejb.Singleton;
+@Singleton
+public class Hitbeans {
+private int hitcnt; 
+public int getHitCnt() { 
+return hitcnt++; 
+}
+}
