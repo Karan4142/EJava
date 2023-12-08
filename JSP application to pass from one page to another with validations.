@@ -1,0 +1,98 @@
+Index.html:
+
+<html>
+<body>
+ <form action="validate.jsp">
+ Enter Your Name<input type="text" name="name"><br>
+ Enter Your Age<input type="text" name="age"><br>
+ Select Hobbies:
+ <input type="checkbox" name="hob" value="Singing">Singing
+ <input type="checkbox" name="hob" value="Reading">Reading Books
+ <input type="checkbox" name="hob" value="Football">Playing Football<br>
+ Enter E-mail:<input type="email" name="email"><br>
+ Select Gender:
+ <input type="radio" name="gender" value="male">Male
+ <input type="radio" name="gender" value="female">Female
+ <input type="radio" name="gender" value="other">Other<br>
+ <input type="hidden" name="error" value="">
+ <input type="submit" value="Submit Form"><br>
+ </form>
+</body>
+</html>
+
+CheckerBean.java:
+
+package mypack;
+public class CheckerBean {
+ private String name, age, hob, email, gender, error;
+ public CheckerBean() {
+ error = "";
+ }
+
+ public void setName(String n) {
+ name = n;
+ }
+ public void setAge(String a) {
+ age = a;
+ }
+ public void setError(String e) {
+ error = e;
+ }
+ public String getName() {
+ return name;
+ }
+ public String getAge() {
+ return age;
+ }
+ public String getError() {
+ return error;
+ }
+ public boolean validate() {
+ boolean res = true;
+ if (name == null) {
+ error += "<br>Enter First Name";
+ res = false;
+ }
+ if (age == null) {
+ error += "<br>Enter age";
+ res = false;
+ }
+ if (age.length() > 2) {
+ error += "<br>Age Invalid";
+ res = false;
+ }
+ return res;
+ }
+}
+
+
+validate.jsp:
+
+<%@page import="mypack.*;" %>
+<jsp:useBean id="obj" scope="request" class="mypack.CheckerBean">
+ <jsp:setProperty name="obj" property="*"/>
+</jsp:useBean>
+<%
+if (obj.validate()) {
+%>
+<jsp:forward page="Successful.jsp"/>
+<%
+} else {
+%>
+<jsp:include page="index.html"/>
+<%
+}
+%>
+<%= obj.getError() %>
+
+Successful.jsp:
+
+<html>
+<body>
+ <h1>DATA VALIDATED SUCCESSFULLY</h1>
+ <%
+ String s1 = request.getParameter("name");
+ out.print(s1);
+ %>
+</body>
+</html>
