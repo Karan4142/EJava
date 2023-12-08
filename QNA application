@@ -1,0 +1,75 @@
+Index.html:
+<html>
+<head>
+ <title>My Paper</title>
+</head>
+<body>
+ <form method="post" action="CheckServlet">
+ <h1>My Paper</h1>
+ <p>Q. 1) Which is a valid keyword in Java?</p>
+ <input type="radio" name="r1" value="int">interface
+ <input type="radio" name="r1" value="F">Float
+ <input type="radio" name="r1" value="s">string
+ <input type="radio" name="r1" value="all">All of the above
+ <br><br>
+ <p>Q. 2) What is sent to the user via HTTP, invoked using the HTTP protocol on the user's computer, and 
+run on the user's computer as an application?</p>
+ <input type="radio" name="r2" value="app">A Java application
+ <input type="radio" name="r2" value="applet">A Java applet
+ <input type="radio" name="r2" value="servlet">A Java servlet
+ <input type="radio" name="r2" value="none">None of the above
+ <br><br>
+ <p>Q. 3) JDBC stands for:</p>
+ <input type="radio" name="r3" value="jdbc">Java Database Connectivity
+ <input type="radio" name="r3" value="jdbc1">Java Database Components
+ <input type="radio" name="r3" value="jdbc2">Java Database Control
+ <input type="radio" name="r3" value="none">None of the above
+ <br><br>
+ <p>Q. 4) What is bytecode?</p>
+ <input type="radio" name="r4" value="msc">Machine-specific code
+ <input type="radio" name="r4" value="jcn">Java code
+Enterprise Java B.N.N.College,Bhiwandi
+ 23
+ <input type="radio" name="r4" value="mic">Machine-independent code
+ <input type="radio" name="r4" value="none">None of the above
+ <br><br>
+ <input type="submit" value="Display Result">
+ <input type="reset" value="Reset Values">
+ </form>
+</body>
+</html>
+Sevlet:
+import java.io.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+public class CheckServlet extends GenericServlet {
+ public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+ res.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = res.getWriter();
+ try {
+ out.println("<html>");
+ out.println("<head>");
+ out.println("<title>Servlet page</title>");
+ out.println("</head>");
+ out.println("<body>");
+ String a1, a2, a3, a4;
+ a1 = req.getParameter("r1");
+ a2 = req.getParameter("r2");
+ a3 = req.getParameter("r3");
+Enterprise Java B.N.N.College,Bhiwandi
+ 24
+ a4 = req.getParameter("r4");
+ if ((a1.equals("int")) && (a2.equals("app")) && (a3.equals("jdbc")) && (a4.equals("mic"))) {
+ out.println("You are Pass");
+ } else {
+ out.println("Better luck next time");
+ }
+ out.println("</body>");
+ out.println("</html>");
+ } finally {
+ out.close();
+ }
+ }
+}
