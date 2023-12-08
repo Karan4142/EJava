@@ -1,0 +1,46 @@
+Index.html:
+<html>
+ <head>
+ <title>Calculator</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ </head>
+ <body>
+ <form action="calculator">
+ enter number n1: <input type="text" name="n1"><br>
+ enter number n2: <input type="text" name="n2"><br>
+ select an operator
+ <input type="radio" name="opr" value="+">ADDITION
+ <input type="radio" name="opr" value="-">SUBTRACTION
+ <input type="radio" name="opr" value="*">MULTIPLY
+ <input type="radio" name="opr" value="/">DIVIDE<br>
+ <input type="submit" value="calculate">
+ </form>
+ </body>
+</html>
+
+
+Servlet:
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class calculator extends HttpServlet {
+ @Override
+ protected void doGet(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException {
+ PrintWriter out = response.getWriter();
+ double d1 = Double.parseDouble(request.getParameter("n1"))
+ double d2 = Double.parseDouble(request.getParameter("n1"));
+ double result =0;
+ String opr = request.getParameter("opr");
+ if(opr.equals("+"))result=d1+d2;
+ if(opr.equals("-"))result=d1-d2;
+ if(opr.equals("*"))result=d1*d2;
+ if(opr.equals("/"))result=d1/d2;
+ out.println("<h1> Result="+result);
+ 
+ }
+}
