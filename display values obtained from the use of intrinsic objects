@@ -1,0 +1,23 @@
+Implicit.jsp::
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Use of Implicit Object in JSP</title>
+</head>
+<body>
+ <h1>Use of implicit objects in JSP</h1>
+ <h2>Request Object</h2>
+ Context Path: <%= request.getContextPath() %><br>
+ Remote Host: <%= request.getRemoteHost() %><br>
+ <h2>Response Object</h2>
+ Character Encoding Type: <%= response.getCharacterEncoding() %><br>
+ Content Type: <%= response.getContentType() %><br>
+ <h2>Session Object</h2>
+ ID: <%= session.getId() %><br>
+ Creation Time: <%= new java.util.Date(session.getCreationTime()) %><br>
+ Last Access Time: <%= new java.util.Date(session.getLastAccessedTime()) %>
+</body>
+</html>
